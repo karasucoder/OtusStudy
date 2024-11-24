@@ -192,46 +192,6 @@ namespace BotInteractiveMenuApp
                         Environment.NewLine +
                         " ");
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                //if (userText.Length > 5)
-                //{
-                //    if (userText[5] == ' ')
-                //    {
-                //        string echoText = userText.Substring(5);
-                //        Console.WriteLine($"Your text is {echoText.Substring(1)}." +
-                //            Environment.NewLine +
-                //            " ");
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("The command is anavailable." +
-                //            Environment.NewLine +
-                //            " ");
-                //    }
-
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Please, make sure to enter some text after the command. For example: /echo {your text here}." +
-                //        Environment.NewLine +
-                //            " ");
-                //}
             }
         }
     }
