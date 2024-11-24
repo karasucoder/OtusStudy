@@ -1,4 +1,8 @@
-﻿namespace BotInteractiveMenuApp
+﻿using System.Diagnostics.Metrics;
+using System.Net.Quic;
+using System.Numerics;
+
+namespace BotInteractiveMenuApp
 {
     internal class Program
     {
@@ -156,29 +160,78 @@
             }
             else
             {
-                if (userText.Length > 5)
+                string echoText = userText.Substring(5);
+
+                if (echoText.Length > 0)
                 {
-                    if (userText[5] == ' ')
+                    if (echoText[0] == ' ')
                     {
-                        string echoText = userText.Substring(5);
-                        Console.WriteLine($"Your text is {echoText.Substring(1)}." +
-                            Environment.NewLine +
-                            " ");
+                        if (string.IsNullOrEmpty(echoText.Substring(1)))
+                        {
+                            Console.WriteLine("The text after /echo can't be empty." +
+                                Environment.NewLine +
+                                " ");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{userName}, your text is {echoText.Trim()}." +
+                                Environment.NewLine +
+                                " ");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("The command is anavailable." +
+                        Console.WriteLine("The command is unavalaible." +
                             Environment.NewLine +
                             " ");
                     }
-
                 }
                 else
                 {
-                    Console.WriteLine("Please, make sure to enter some text after the command. For example: /echo {your text here}." +
+                    Console.WriteLine("Make sure you entered some text after the command. For example: /echo <your text is here>." +
                         Environment.NewLine +
-                            " ");
+                        " ");
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //if (userText.Length > 5)
+                //{
+                //    if (userText[5] == ' ')
+                //    {
+                //        string echoText = userText.Substring(5);
+                //        Console.WriteLine($"Your text is {echoText.Substring(1)}." +
+                //            Environment.NewLine +
+                //            " ");
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine("The command is anavailable." +
+                //            Environment.NewLine +
+                //            " ");
+                //    }
+
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Please, make sure to enter some text after the command. For example: /echo {your text here}." +
+                //        Environment.NewLine +
+                //            " ");
+                //}
             }
         }
     }
