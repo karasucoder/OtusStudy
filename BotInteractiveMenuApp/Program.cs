@@ -6,6 +6,8 @@ internal class Program
     {
         string userName = null;
 
+        List<string> tasks = new List<string>();
+
         while (true)
         {
             Greeting(userName);
@@ -29,6 +31,15 @@ internal class Program
                 case "/info":
                     Info(userName);
                     break;
+                case "/addtask":
+                    AddTask(tasks);
+                    break;
+                case "/showtasks":
+                    ShowTasks(tasks);
+                    break;
+                case "/removetask":
+                    RemoveTask(tasks);
+                    break;
                 case "/exit":
                     return;
                 default:
@@ -51,6 +62,12 @@ internal class Program
             "/help" +
             Environment.NewLine +
             "/info" +
+            Environment.NewLine +
+            "/addtask" +
+            Environment.NewLine +
+            "/showtasks" +
+            Environment.NewLine +
+            "/removetask" +
             Environment.NewLine +
             "/exit";
 
@@ -101,6 +118,12 @@ internal class Program
             "- /help: Provides information on how to use the bot." +
             Environment.NewLine +
             "- /echo: Echoes back the text you enter after this command. Note: The command is only available after you have used the command /start and provided your name." +
+            Environment.NewLine +
+            "- /addtask: Adds a new task to the list." +
+            Environment.NewLine +
+            "- /showtasks: Displays the list of tasks." +
+            Environment.NewLine +
+            "- /removetask: Removes the task from the list." +
             Environment.NewLine +
             "- /exit: Exits the program." +
             Environment.NewLine +
@@ -188,6 +211,94 @@ internal class Program
                     Environment.NewLine +
                     " ");
             }
+        }
+    }
+
+    static void AddTask(List<string> tasks)
+    {
+        Console.WriteLine("Input the task:");
+
+        string task = Console.ReadLine().Trim();
+
+        if (string.IsNullOrEmpty(task))
+        {
+            Console.WriteLine("The task description can't be empty." +
+                Environment.NewLine +
+                " ");
+        }
+        else
+        {
+            tasks.Add(task);
+
+            Console.WriteLine($"The task \"{task}\" has been successfully added to the list!" +
+                Environment.NewLine +
+                " ");
+        }
+    }
+
+    static void ShowTasks(List<string> tasks)
+    {
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("The task list is empty." +
+                Environment.NewLine +
+                " ");
+        }
+        else
+        {
+            Console.WriteLine("Here is the current list of your tasks:");
+            foreach (string task in tasks)
+            {
+                Console.WriteLine($"{tasks.IndexOf(task) + 1} - {task}");
+            }
+            Console.WriteLine(Environment.NewLine + " ");
+        }
+    }
+
+    static void RemoveTask(List<string> tasks)
+    {
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("The command is unavailable because the task list is empty." +
+                Environment.NewLine +
+                " ");
+            return;
+        }
+
+        Console.WriteLine("Here is the current list of your tasks:");
+
+        foreach (string task in tasks)
+        {
+            Console.WriteLine($"{tasks.IndexOf(task) + 1} - {task}");
+        }
+
+        Console.WriteLine("Input the number of the task you want to remove:");
+
+        bool isValid = int.TryParse(Console.ReadLine(), out int taskNumber);
+
+        if (isValid)
+        {
+            var taskToDelete = tasks.ElementAtOrDefault(taskNumber - 1);
+            
+            if (taskToDelete != null)
+            {
+                tasks.Remove(taskToDelete);
+                Console.WriteLine($"The task at number {taskNumber} has been successfully removed from the list." +
+                    Environment.NewLine +
+                    " ");
+            }
+            else
+            {
+                Console.WriteLine("Sorry, there is no task with this number." +
+                        Environment.NewLine +
+                        " ");
+            }
+        }
+        else
+        {
+            Console.WriteLine("The value is invalid. Try once again." +
+                Environment.NewLine +
+                " ");
         }
     }
 }
