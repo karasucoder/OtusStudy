@@ -278,11 +278,11 @@ internal class Program
 
         if (isValid)
         {
-            var taskToRemove = tasks.ElementAtOrDefault(taskNumber - 1);
+            var taskToDelete = tasks.ElementAtOrDefault(taskNumber - 1);
             
-            if (taskToRemove != null)
+            if (taskToDelete != null)
             {
-                tasks.Remove(taskToRemove);
+                tasks.Remove(taskToDelete);
                 Console.WriteLine($"The task at number {taskNumber} has been successfully removed from the list." +
                     Environment.NewLine +
                     " ");
