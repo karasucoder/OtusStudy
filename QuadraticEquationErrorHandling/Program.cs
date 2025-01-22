@@ -41,7 +41,7 @@ internal class Program
                 if (!bParsingResult) exceptionMessage += $" b";
                 if (!cParsingResult) exceptionMessage += $" c";
 
-                if (!aParsingResult || !bParsingResult || !cParsingResult) throw new ArgumentException(exceptionMessage);
+                if (!aParsingResult || a == 0 || !bParsingResult || !cParsingResult) throw new ArgumentException(exceptionMessage);
             }
             catch (Exception)
             {
@@ -56,7 +56,7 @@ internal class Program
                 switch (discriminant)
                 {
                     case < 0:
-                        throw new Exception("Вещественных значений не найдено");
+                        throw new NoRootsException("Вещественных значений не найдено");
                     case > 0:
                         var x1 = (-b + (int)Math.Sqrt(discriminant)) / 2 * a;
                         var x2 = (-b - (int)Math.Sqrt(discriminant)) / 2 * a;
@@ -68,7 +68,7 @@ internal class Program
                         break;
                 }
             }
-            catch (Exception noRootsEx)
+            catch (NoRootsException noRootsEx)
             {
                 FormatData(noRootsEx.Message, Severity.Warning, dictionary);
                 return;
