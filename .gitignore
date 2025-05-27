@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /QuadraticEquationErrorHandling
 /InterfacesLearning/InterfacesLearning.csproj
+
+# Configure files
+appsettings.json
