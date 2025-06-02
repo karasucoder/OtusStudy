@@ -8,34 +8,60 @@ namespace SimpleTgBot
     {
         public static async Task Main(string[] args)
         {
-            var cts = new CancellationTokenSource(); // прерыватель соединения с ботом
+            var cts = new CancellationTokenSource();
 
-            var bot = new TelegramBotClient("7852079891:AAEZYwrTU1uXquRBkx4lUfZUgqe8bEmSKSE", cancellationToken: cts.Token);
-
-            // настройка параметров получения обновлений
-            var receiverOptions = new ReceiverOptions
+            try
             {
-                // только обновления типа message
-                AllowedUpdates = [UpdateType.Message], 
-                // игнорирование обновлений, отправленных до запуска бота
-                DropPendingUpdates = true
-            };
+                var botClient = new TelegramBotClient(AppConfiguration.BotToken);
+                var handler = new UpdateHandler();
 
-            // создание обработчика обновлений
-            var handler = new UpdateHandler();
+                handler.OnHandleUpdateStarted += message =>
+                    Console.WriteLine($"Началась обработка сообщения '{message}'");
 
-            // получение обновлений
-            bot.StartReceiving(handler, receiverOptions);
+                handler.OnHandleUpdateCompleted += message =>
+                    Console.WriteLine($"Закончилась обработка сообщения '{message}'");
 
-            var me = await bot.GetMe();
+                var receiverOptions = new ReceiverOptions
+                {
+                    AllowedUpdates = [UpdateType.Message],
+                    DropPendingUpdates = true
+                };
 
-            Console.WriteLine($"{me.FirstName} запущен!");
+                botClient.StartReceiving(
+                   updateHandler: handler,
+                   receiverOptions: receiverOptions,
+                   cancellationToken: cts.Token);
 
-            // бесконечная задержка
-            // чтобы программа не завершалась сразу после запуска бота
-            await Task.Delay(-1);
+                var me = await botClient.GetMe(cancellationToken: cts.Token);
 
-            await cts.CancelAsync(); // отмена операций перед выходом из программы
+                Console.WriteLine($"{me.FirstName} запущен!");
+
+                Console.WriteLine("\nНажмите клавишу A для выхода.");
+
+                while (!cts.IsCancellationRequested)
+                {
+                    var key = Console.ReadKey();
+
+                    if (key.Key == ConsoleKey.A)
+                    {
+                        Console.WriteLine("\nЗавершение работы...");
+
+                        cts.Cancel();
+                    }
+                    else
+                    {
+                        var botInfo = await botClient.GetMe(cancellationToken: cts.Token);
+
+                        Console.WriteLine($"\nBot ID: {botInfo.Id}\n" +
+                                          $"Bot Username: {botInfo.Username}\n" +
+                                          $"Bot Username: {botInfo.FirstName}\n");
+                    }
+                }
+            }
+            finally
+            {
+                cts.Dispose();
+            }
         }
     }
 }

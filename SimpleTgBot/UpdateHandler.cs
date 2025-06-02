@@ -1,24 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace SimpleTgBot
 {
+    public delegate void MessageHandler(string message);
+
     public class UpdateHandler : IUpdateHandler
     {
-        Task IUpdateHandler.HandleErrorAsync(ITelegramBotClient botClient, Exception exception, HandleErrorSource source, CancellationToken cancellationToken)
+        public event MessageHandler? OnHandleUpdateStarted;
+        public event MessageHandler? OnHandleUpdateCompleted;
+
+        public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, HandleErrorSource source, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Произошла ошибка: {exception.Message}");
+
+            await Task.CompletedTask;
         }
 
-        Task IUpdateHandler.HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (update == null || update.Type != UpdateType.Message || update.Message?.Type != MessageType.Text)
+                return;
+
+            var messageText = update.Message.Text;
+
+            try
+            {
+                OnHandleUpdateStarted?.Invoke(messageText);
+
+                await botClient.SendMessage(
+                    chatId: update.Message.Chat.Id,
+                    text: "Сообщение успешно принято.",
+                    cancellationToken: cancellationToken);
+            }
+            finally
+            {
+                OnHandleUpdateCompleted?.Invoke(messageText);
+            }
         }
     }
 }
