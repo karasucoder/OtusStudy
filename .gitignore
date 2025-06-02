@@ -368,3 +368,4 @@ FodyWeavers.xsd
 appsettings.json
 /SimpleTgBot/SimpleTgBotApp.csproj
 /SimpleTgBot/SimpleTgBotApp.csproj
+/SimpleTgBot/SimpleOtusTelegramBotApp.csproj
