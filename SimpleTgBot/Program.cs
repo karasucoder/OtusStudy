@@ -2,7 +2,7 @@
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
 
-namespace SimpleOtusTelegramBotApp
+namespace SimpleTgBot
 {
     public class Program
     {
