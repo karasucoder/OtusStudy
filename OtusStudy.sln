@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuplesLearning", "TuplesLea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LambdaExpressionsLearning", "LambdaExpressionsLearning\LambdaExpressionsLearning.csproj", "{A0243F21-AA91-482B-985D-FA7C753FED07}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTgBotApp", "SimpleTgBot\SimpleTgBotApp.csproj", "{35BD535E-9ED5-4710-8375-5EA3BB43B1AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleOtusTelegramBotApp", "SimpleTgBot\SimpleOtusTelegramBotApp.csproj", "{35BD535E-9ED5-4710-8375-5EA3BB43B1AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOSimpleConsoleApp", "IOSimpleConsoleApp\IOSimpleConsoleApp.csproj", "{CDCB18CC-C71F-4A5F-9DFE-0EFAB31FA32F}"
 EndProject

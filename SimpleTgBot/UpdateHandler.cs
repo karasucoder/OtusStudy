@@ -3,7 +3,7 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace SimpleTgBot
+namespace SimpleOtusTelegramBotApp
 {
     public delegate void MessageHandler(string message);
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace SimpleTgBot;
+namespace SimpleOtusTelegramBotApp;
 
 internal static class AppConfiguration
 {
