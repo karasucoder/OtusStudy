@@ -366,3 +366,5 @@ FodyWeavers.xsd
 
 # Configure files
 appsettings.json
+/SimpleTgBot/SimpleTgBotApp.csproj
+/SimpleTgBot/SimpleTgBotApp.csproj
