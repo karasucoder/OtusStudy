@@ -64,7 +64,7 @@ namespace WEventRegistrationBotApp.Services
                 new[]
                 {
                     InlineKeyboardButton.WithCallbackData(
-                        text: $"{e.Event.Name} | {e.Event.EventDate:dd.MM.} | 💰 {e.Event.Price} | 🆓 {e.FreeSeats} мест",
+                        text: $"{e.Event.Name} | {e.Event.EventDate:dd.MM.} | {e.Event.Price} | 🆓 {e.FreeSeats} мест",
                         callbackData: $"select_event_{e.Event.Id}")
                 }
             ).ToArray();
@@ -233,7 +233,7 @@ namespace WEventRegistrationBotApp.Services
                       $"Количество гостей: {state.GuestCount}\n" +
                       $"Имя: {state.GuestName}\n" +
                       $"Телефон: {state.GuestPhoneNumber}\n" +
-                      $"К оплате: {reservationCost}\n\n" +
+                      $"К оплате: {reservationCost.ToString("F2")}\n\n" +
                       $"Подтверждаете бронирование?",
                 replyMarkup: keyboard,
                 cancellationToken: cancellationToken);
