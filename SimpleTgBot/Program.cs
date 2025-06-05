@@ -10,16 +10,23 @@ namespace SimpleTgBot
         {
             var cts = new CancellationTokenSource();
 
+            UpdateHandler? handler = null;
+            MessageHandler? startedHandler = null;
+            MessageHandler? completedHandler = null;
+
+
             try
             {
                 var botClient = new TelegramBotClient(AppConfiguration.BotToken);
-                var handler = new UpdateHandler();
+                handler = new UpdateHandler();
 
-                handler.OnHandleUpdateStarted += message =>
+                startedHandler = message =>
                     Console.WriteLine($"Началась обработка сообщения '{message}'");
-
-                handler.OnHandleUpdateCompleted += message =>
+                completedHandler = message =>
                     Console.WriteLine($"Закончилась обработка сообщения '{message}'");
+
+                handler.OnHandleUpdateStarted += startedHandler;
+                handler.OnHandleUpdateCompleted += completedHandler;
 
                 var receiverOptions = new ReceiverOptions
                 {
@@ -45,13 +52,11 @@ namespace SimpleTgBot
                     if (key.Key == ConsoleKey.A)
                     {
                         Console.WriteLine("\nЗавершение работы...");
-
                         cts.Cancel();
                     }
                     else
                     {
                         var botInfo = await botClient.GetMe(cancellationToken: cts.Token);
-
                         Console.WriteLine($"\nBot ID: {botInfo.Id}\n" +
                                           $"Bot Username: {botInfo.Username}\n" +
                                           $"Bot Username: {botInfo.FirstName}\n");
@@ -60,6 +65,13 @@ namespace SimpleTgBot
             }
             finally
             {
+                if (handler != null)
+                {
+                    if (startedHandler != null)
+                        handler.OnHandleUpdateStarted -= startedHandler;
+                    if (completedHandler != null)
+                        handler.OnHandleUpdateCompleted -= completedHandler;
+                }
                 cts.Dispose();
             }
         }
